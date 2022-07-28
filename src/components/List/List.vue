@@ -1,7 +1,7 @@
 <template>
   <div class="list">
     <!-- 布局：两栏十个，前三个为红+黑 -->
-    <div class="Info" v-for="(item, index) in listInfo" :key="item.score">
+    <div class="Info" :class="{'select':currentIndex===index}" v-for="(item, index) in listInfo" :key="item.score" @click="navClick(index)">
       <span class="index">{{ index + 1 }}</span>
       <span class="hotwords">{{ item.searchWord }}</span>
     </div>
@@ -13,9 +13,21 @@
 </template>
 
 <script>
+import {ref} from 'vue'
 export default {
   name: "List",
-  props: ["listInfo"]
+  props: ["listInfo"],
+  setup(){
+    const currentIndex=ref(0)
+    function navClick(index){
+      console.log(currentIndex.value);
+      currentIndex.value=index
+    }
+    return {
+      currentIndex,
+      navClick
+    }
+  }
 };
 </script>
 
@@ -46,5 +58,8 @@ export default {
     bottom: 5%;
     transform: translate(-50%);
   }
+}
+.select{
+  font-weight: 700;
 }
 </style>
